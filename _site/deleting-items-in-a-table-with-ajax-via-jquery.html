@@ -58,47 +58,47 @@
 					</div>
 				</div>
 				<div class="span9">
-					This is a very straight-forward tutorial on implementing a jQuery-driven ‘delete via AJAX’ feature. Say we have a plain HTML table containing a list of items and a ‘Remove’ link. I’m not going to describe the back-end, but I’m assuming something groovy like [CakePHP][1] or [ASP.NET MVC][2]. I’ve also assumed that the delete request always succeeds and never returns an error, which may not be the case. The script itself is a more than required but is my preferred method as I can extend the elements in the UI fairly easily.
+					<p>This is a very straight-forward tutorial on implementing a jQuery-driven ‘delete via AJAX’ feature. Say we have a plain HTML table containing a list of items and a ‘Remove’ link. I’m not going to describe the back-end, but I’m assuming something groovy like <a href="http://cakephp.org/">CakePHP</a> or <a href="http://www.asp.net/mvc/">ASP.NET MVC</a>. I’ve also assumed that the delete request always succeeds and never returns an error, which may not be the case. The script itself is a more than required but is my preferred method as I can extend the elements in the UI fairly easily.</p>
 
-    <table>
-        <tr><td>Chickpeas</td>      <td><a href="/items/delete/1" class="delete">Delete</a>    </td></tr>
-        <tr><td>Garlic</td>         <td><a href="/items/delete/2" class="delete">Delete</a></td></tr>
-        <tr><td>Olive oil</td>      <td><a href="/items/delete/3" class="delete">Delete</a></td></tr>
-        <tr><td>Tahini</td>         <td><a href="/items/delete/4" class="delete">Delete</a></td></tr>
-        <tr><td>Cumin</td>          <td><a href="/items/delete/5" class="delete">Delete</a></td></tr>
-        <tr><td>Lemon juice</td>    <td><a href="/items/delete/6" class="delete">Delete</a></td></tr>
-    </table>
+<pre><code>&lt;table&gt;
+    &lt;tr&gt;&lt;td&gt;Chickpeas&lt;/td&gt;      &lt;td&gt;&lt;a href="/items/delete/1" class="delete"&gt;Delete&lt;/a&gt;    &lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Garlic&lt;/td&gt;         &lt;td&gt;&lt;a href="/items/delete/2" class="delete"&gt;Delete&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Olive oil&lt;/td&gt;      &lt;td&gt;&lt;a href="/items/delete/3" class="delete"&gt;Delete&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Tahini&lt;/td&gt;         &lt;td&gt;&lt;a href="/items/delete/4" class="delete"&gt;Delete&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Cumin&lt;/td&gt;          &lt;td&gt;&lt;a href="/items/delete/5" class="delete"&gt;Delete&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Lemon juice&lt;/td&gt;    &lt;td&gt;&lt;a href="/items/delete/6" class="delete"&gt;Delete&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
 
-The delete hrefs (`/items/delete/XX`) link to an action or page that deletes the specified item and returns a HTTP status of 200 (OK). If the action just redirected to the current page then this table should work as it stands, which is probably a good way to check that everthing works as expected without involving AJAX features. If you just want to set up the client side without implementing any server-side code, create the following in delete_test.php and use it for the delete links:
+<p>The delete hrefs (<code>/items/delete/XX</code>) link to an action or page that deletes the specified item and returns a HTTP status of 200 (OK). If the action just redirected to the current page then this table should work as it stands, which is probably a good way to check that everthing works as expected without involving AJAX features. If you just want to set up the client side without implementing any server-side code, create the following in delete_test.php and use it for the delete links:</p>
 
-    <?php header('HTTP/1.1 200 OK'); ?>
+<pre><code>&lt;?php header('HTTP/1.1 200 OK'); ?&gt;
+</code></pre>
 
-Make sure that jQuery 1.3+ has been included in the page and add the following:
+<p>Make sure that jQuery 1.3+ has been included in the page and add the following:</p>
 
-	<script type="text/javascript">
-	$(function(){
-	    var ui = {
-	        init: function(){
-	            $('a.delete').live('click', ui.delete_click);
-	        },
-	 
-	        delete_click: function(){
-	            link = this;
-	            $.get(link.href, function(data, status) {
-	                $(link).parents('tr').remove();
-	            });
-	            return false;
-	        }
-	    };
-	 
-	    ui.init();
-	});
-	</script>
+<pre><code>&lt;script type="text/javascript"&gt;
+$(function(){
+    var ui = {
+        init: function(){
+            $('a.delete').live('click', ui.delete_click);
+        },
 
-Very basic stuff but it works. It could be jazzed up by fading out the items first or updating a status label. If there is a significant delay between calling the delete action and getting a response the user may not think anything has happened, so perhaps the delete link should change or be disabled.
+        delete_click: function(){
+            link = this;
+            $.get(link.href, function(data, status) {
+                $(link).parents('tr').remove();
+            });
+            return false;
+        }
+    };
 
-[1]: http://cakephp.org/
-[2]: http://www.asp.net/mvc/
+    ui.init();
+});
+&lt;/script&gt;
+</code></pre>
+
+<p>Very basic stuff but it works. It could be jazzed up by fading out the items first or updating a status label. If there is a significant delay between calling the delete action and getting a response the user may not think anything has happened, so perhaps the delete link should change or be disabled.</p>
 
 				</div>
 			</div>

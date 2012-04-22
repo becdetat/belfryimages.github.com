@@ -58,19 +58,17 @@
 					</div>
 				</div>
 				<div class="span9">
-					Quick tip / reminder to myself. I’m adding some tests to an ancient (almost two years old :-) ) Winforms control that uses a ListView. All I’m doing is making sure that a particular context menu item is enabled or disabled depending on the state of the object in the tag of the selected item in the ListView. The details aren’t important. Trust me.
+					<p>Quick tip / reminder to myself. I’m adding some tests to an ancient (almost two years old :-) ) Winforms control that uses a ListView. All I’m doing is making sure that a particular context menu item is enabled or disabled depending on the state of the object in the tag of the selected item in the ListView. The details aren’t important. Trust me.</p>
 
-The issue is that since the control being tested is never actually displayed, the ListView control doesn’t update its SelectedItems property. I found a Stack Overflow [question and answer][1] regarding this. The (marked as) ‘correct’ answer involves flashing up a hidden form containing the control. Potentially messy. If I was testing a form I could just flash that up but still, not an ideal solution. The [second answer][2] to the question does the trick. Fourth line is the money shot:
+<p>The issue is that since the control being tested is never actually displayed, the ListView control doesn’t update its SelectedItems property. I found a Stack Overflow <a href="http://stackoverflow.com/questions/304844/why-do-selectedindices-and-selecteditems-not-work-when-listview-is-instantiated-i">question and answer</a> regarding this. The (marked as) ‘correct’ answer involves flashing up a hidden form containing the control. Potentially messy. If I was testing a form I could just flash that up but still, not an ideal solution. The <a href="http://stackoverflow.com/questions/304844/why-do-selectedindices-and-selecteditems-not-work-when-listview-is-instantiated-i/518411#518411">second answer</a> to the question does the trick. Fourth line is the money shot:</p>
 
-	// Select the first list view item:
-	controlBeingTested.myListView.Items[0].Selected = true;
-	// then trick controlBeingTested.myListView.SelectedItems into being updated:
-	controlBeingTested.myListView.AccessibilityObject.ToString();
+<pre><code>// Select the first list view item:
+controlBeingTested.myListView.Items[0].Selected = true;
+// then trick controlBeingTested.myListView.SelectedItems into being updated:
+controlBeingTested.myListView.AccessibilityObject.ToString();
+</code></pre>
 
-The downside is that the `Accessibility` reference needs to be added to the unit test assembly.
-
-[1]: http://stackoverflow.com/questions/304844/why-do-selectedindices-and-selecteditems-not-work-when-listview-is-instantiated-i
-[2]: http://stackoverflow.com/questions/304844/why-do-selectedindices-and-selecteditems-not-work-when-listview-is-instantiated-i/518411#518411
+<p>The downside is that the <code>Accessibility</code> reference needs to be added to the unit test assembly.</p>
 
 				</div>
 			</div>

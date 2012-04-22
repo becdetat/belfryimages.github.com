@@ -58,43 +58,43 @@
 					</div>
 				</div>
 				<div class="span9">
-					I've used two methods of closing branches in Mercurial.
+					<p>I've used two methods of closing branches in Mercurial.</p>
 
-### Non-destructively closing the branch
+<h3>Non-destructively closing the branch</h3>
 
-The first non-destructively closes the branch just so it doesn't show up in `hg heads`. You switch to the bad branch (use either the tag or revision number) then add a commit that closes the branch:
+<p>The first non-destructively closes the branch just so it doesn't show up in <code>hg heads</code>. You switch to the bad branch (use either the tag or revision number) then add a commit that closes the branch:</p>
 
-    hg up -C badbranch
-    hg com --close-branch -m "closing this branch"
-    hg up default
+<pre><code>hg up -C badbranch
+hg com --close-branch -m "closing this branch"
+hg up default
+</code></pre>
 
-### Destroying all unwanted branches
+<h3>Destroying all unwanted branches</h3>
 
-The second destructively closes the branch, which can dramatically reduce the size of the repository's `.hg` folder. I did this when I was [moving my work repository to BitBucket][3]. It isn't an easy process and is very time consuming, and make sure you have backups.
+<p>The second destructively closes the branch, which can dramatically reduce the size of the repository's <code>.hg</code> folder. I did this when I was <a href="http://blog.belfryimages.com.au/post/5203916079/ssh-for-pushing-large-repositories-to-bitbucket">moving my work repository to BitBucket</a>. It isn't an easy process and is very time consuming, and make sure you have backups.</p>
 
-Say you're in `C:\projects` and the repository you want to clone is in `C:\projects\my_repo`. You clone the entire repository, but only the heads that you want to keep:
+<p>Say you're in <code>C:\projects</code> and the repository you want to clone is in <code>C:\projects\my_repo</code>. You clone the entire repository, but only the heads that you want to keep:</p>
 
-    hg clone my_repo my_repo.clone --rev <revision> --rev <another revision> ...
+<pre><code>hg clone my_repo my_repo.clone --rev &lt;revision&gt; --rev &lt;another revision&gt; ...
+</code></pre>
 
-For example, I only wanted to save my `default` and `stable` branches, so I used `hg clone my_repo my_repo.clone --rev default --rev stable`.
+<p>For example, I only wanted to save my <code>default</code> and <code>stable</code> branches, so I used <code>hg clone my_repo my_repo.clone --rev default --rev stable</code>.</p>
 
-Then verify that the differences between the original and the cloned repository are only the branches you wanted to drop:
+<p>Then verify that the differences between the original and the cloned repository are only the branches you wanted to drop:</p>
 
-    hg incoming -R my_repo.clone my_repo
+<pre><code>hg incoming -R my_repo.clone my_repo
+</code></pre>
 
-If you missed some changesets in the clone step you can pull them over:
+<p>If you missed some changesets in the clone step you can pull them over:</p>
 
-    hg pull -R my_repo.clone my_repo --rev <missed revision>
+<pre><code>hg pull -R my_repo.clone my_repo --rev &lt;missed revision&gt;
+</code></pre>
 
-You then need to copy over non-tracked files from the original repository, especially `.hg\hgrc`, as the cloned repository is pointing to the original repository by default.
+<p>You then need to copy over non-tracked files from the original repository, especially <code>.hg\hgrc</code>, as the cloned repository is pointing to the original repository by default.</p>
 
-I had issues getting the trimmed repository over to other copies of the repository. In particular I couldn't `hg pull` from the trimmed repository any more. I ended up just copying the entire repository to my different machines and set them up from there.
+<p>I had issues getting the trimmed repository over to other copies of the repository. In particular I couldn't <code>hg pull</code> from the trimmed repository any more. I ended up just copying the entire repository to my different machines and set them up from there.</p>
 
-The [Mercurial Wiki][1] has a fine page on [pruning branches][2] which is where I found these methods.
-
-[1]: http://mercurial.selenic.com/wiki/Mercurial
-[2]: http://mercurial.selenic.com/wiki/PruningDeadBranches
-[3]: http://blog.belfryimages.com.au/post/5203916079/ssh-for-pushing-large-repositories-to-bitbucket
+<p>The <a href="http://mercurial.selenic.com/wiki/Mercurial">Mercurial Wiki</a> has a fine page on <a href="http://mercurial.selenic.com/wiki/PruningDeadBranches">pruning branches</a> which is where I found these methods.</p>
 
 				</div>
 			</div>

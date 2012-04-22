@@ -58,27 +58,42 @@
 					</div>
 				</div>
 				<div class="span9">
-					1. Fork and clone etherpad-lite
-2. Install node.js windows installer (MSI) from http://nodejs.org
-    - This includes NPM (Node Package Manager)
-    - Path to `node.exe` and `npm.cmd` are added to the path (restart console)
-3. Download `curl.exe` (http://curl.haxx.se) and save it to somewhere in the path
-4. Open the `var` folder and delete any files named `minified*`
-5. Check the required versions of files:
-    - jQuery, from `bin/installDeps.sh`
-    - node.js, from `bin/buildForWindows.sh`
-6. From the `etherpad-lite` directory, run the following commands (note this was tested using PowerShell, may be different for cmd.exe): 
-    - copy settings.json.template_windows settings.json
-    - npm install
-    - curl -lo static\js\jquery.min.js http://code.jquery.com/jquery-1.7.min.js
-    - copy static\custom\js.template static\custom\index.template
-    - copy static\custom\js.template static\custom\pad.template
-    - copy static\custom\js.template static\custom\timeslider.template
-    - copy static\custom\css.template static\custom\index.template
-    - copy static\custom\css.template static\custom\pad.template
-    - copy static\custom\css.template static\custom\timeslider.template
-    - curl -lo bin\node.exe http://nodejs.org/dist/v0.6.5/node.exe
-7. Run `start.bat`
+					<ol>
+<li>Fork and clone etherpad-lite</li>
+<li>Install node.js windows installer (MSI) from http://nodejs.org
+
+<ul>
+<li>This includes NPM (Node Package Manager)</li>
+<li>Path to <code>node.exe</code> and <code>npm.cmd</code> are added to the path (restart console)</li>
+</ul>
+</li>
+<li>Download <code>curl.exe</code> (http://curl.haxx.se) and save it to somewhere in the path</li>
+<li>Open the <code>var</code> folder and delete any files named <code>minified*</code></li>
+<li>Check the required versions of files:
+
+<ul>
+<li>jQuery, from <code>bin/installDeps.sh</code></li>
+<li>node.js, from <code>bin/buildForWindows.sh</code></li>
+</ul>
+</li>
+<li>From the <code>etherpad-lite</code> directory, run the following commands (note this was tested using PowerShell, may be different for cmd.exe):
+
+<ul>
+<li>copy settings.json.template_windows settings.json</li>
+<li>npm install</li>
+<li>curl -lo static\js\jquery.min.js http://code.jquery.com/jquery-1.7.min.js</li>
+<li>copy static\custom\js.template static\custom\index.template</li>
+<li>copy static\custom\js.template static\custom\pad.template</li>
+<li>copy static\custom\js.template static\custom\timeslider.template</li>
+<li>copy static\custom\css.template static\custom\index.template</li>
+<li>copy static\custom\css.template static\custom\pad.template</li>
+<li>copy static\custom\css.template static\custom\timeslider.template</li>
+<li>curl -lo bin\node.exe http://nodejs.org/dist/v0.6.5/node.exe</li>
+</ul>
+</li>
+<li>Run <code>start.bat</code></li>
+</ol>
+
 
 				</div>
 			</div>

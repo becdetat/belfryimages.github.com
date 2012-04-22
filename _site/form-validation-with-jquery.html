@@ -58,46 +58,48 @@
 					</div>
 				</div>
 				<div class="span9">
-					Every time I’ve implemented client-side form validation I’ve started from scratch and done it a little differently. Usually it devolves into a messy set of `if` statements and duplicated code. Here’s my latest method, which separates the validation rules from the processing. This will only handle relatively simple validation cases.
+					<p>Every time I’ve implemented client-side form validation I’ve started from scratch and done it a little differently. Usually it devolves into a messy set of <code>if</code> statements and duplicated code. Here’s my latest method, which separates the validation rules from the processing. This will only handle relatively simple validation cases.</p>
 
-So start with a form:
+<p>So start with a form:</p>
 
-    <form id="mailingListSubscription" action="subscribe.php">
-        Name: <input type="text" name="name" id="name" /><br />
-        Email: <input type="text" name="email" id="email" /><br />
-        Phone: <input type="text" name="phone" id="phone" /><br />
-        <button type="submit">Subscribe</button>
-    </form>
+<pre><code>&lt;form id="mailingListSubscription" action="subscribe.php"&gt;
+    Name: &lt;input type="text" name="name" id="name" /&gt;&lt;br /&gt;
+    Email: &lt;input type="text" name="email" id="email" /&gt;&lt;br /&gt;
+    Phone: &lt;input type="text" name="phone" id="phone" /&gt;&lt;br /&gt;
+    &lt;button type="submit"&gt;Subscribe&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
 
-All fields are required, and I’m going to use some magical regex (found on the interthingy somewhere) to validate the email address. This script sets up the rules:
+<p>All fields are required, and I’m going to use some magical regex (found on the interthingy somewhere) to validate the email address. This script sets up the rules:</p>
 
-    var rules = [
-        { id: 'name', test: function(val) { return val != ''; }, msg: 'Please enter your name' },
-        { id: 'email', test: function(val) { return val.search(/^[^@]+@[^@]+.[a-z]{2,}$/i) != -1; }, msg: 'Please enter a valid email address' },
-        { id: 'phone', test: function(val) { return val != ''; }, msg: 'Please enter your phone number' }
-    ];
+<pre><code>var rules = [
+    { id: 'name', test: function(val) { return val != ''; }, msg: 'Please enter your name' },
+    { id: 'email', test: function(val) { return val.search(/^[^@]+@[^@]+.[a-z]{2,}$/i) != -1; }, msg: 'Please enter a valid email address' },
+    { id: 'phone', test: function(val) { return val != ''; }, msg: 'Please enter your phone number' }
+];
+</code></pre>
 
-Each rule has the id of the form element being tested, a message that gets displayed on failing the rule, and a function that validates the value of the form element. I also could add multiple rules for the one input.
+<p>Each rule has the id of the form element being tested, a message that gets displayed on failing the rule, and a function that validates the value of the form element. I also could add multiple rules for the one input.</p>
 
-This script sets up the submit handler for the form, which does the validation using the array of rules set up above:
+<p>This script sets up the submit handler for the form, which does the validation using the array of rules set up above:</p>
 
-    $(function(){
-        $('form#mailingListSubscription').submit(function(){
-            for (var i = 0; i < rules.length; i ++) {
-                var rule = rules[i];
-                var target = $('#'+rule.id);
-                if (!rule.test(target.val())) {
-                    alert(rule.msg);
-                    target.focus();
-                    return false;
-                }
+<pre><code>$(function(){
+    $('form#mailingListSubscription').submit(function(){
+        for (var i = 0; i &lt; rules.length; i ++) {
+            var rule = rules[i];
+            var target = $('#'+rule.id);
+            if (!rule.test(target.val())) {
+                alert(rule.msg);
+                target.focus();
+                return false;
             }
-            return true;
-        });
+        }
+        return true;
     });
+});
+</code></pre>
 
-On a test failing, the rule’s msg value is shown and the target of the test gets focus. This could be changed to something more user friendly like showing the message next to the target field.
-
+<p>On a test failing, the rule’s msg value is shown and the target of the test gets focus. This could be changed to something more user friendly like showing the message next to the target field.</p>
 
 				</div>
 			</div>
