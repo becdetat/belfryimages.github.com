@@ -1,6 +1,6 @@
 ---
 title: Google via Ruby console tool
-layout: default
+layout: post
 date: 2010-08-01
 type: regular
 ---

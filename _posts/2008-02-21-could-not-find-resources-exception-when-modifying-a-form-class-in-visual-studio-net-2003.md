@@ -1,6 +1,6 @@
 ---
 title: Could not find resources exception when modifying a form class in Visual Studio .NET 2003
-layout: default
+layout: post
 date: 2008-02-21
 type: regular
 ---

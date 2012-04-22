@@ -1,6 +1,6 @@
 ---
 title: Declaring a class with inheritance and a generic type constraint in C#
-layout: default
+layout: post
 date: 2009-11-13
 type: regular
 ---

@@ -1,6 +1,6 @@
 ---
 title: Running etherpad-lite from source on Windows 
-layout: default
+layout: post
 date: 2011-12-23
 ---
 

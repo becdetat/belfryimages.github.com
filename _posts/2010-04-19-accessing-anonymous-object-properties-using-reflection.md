@@ -1,6 +1,6 @@
 ---
 title: Accessing anonymous object properties using reflection
-layout: default
+layout: post
 date: 2010-04-19
 type: regular
 ---

@@ -58,7 +58,11 @@
 					</div>
 				</div>
 				<div class="span9">
-					<p>Is a very annoying error message that you get when writing above average complexity <code>SELECT</code> statements. I’m not sure if it only applies to queries against SQL Server, but it can be very difficult to debug if you haven’t come across it before (or come across so many things in a day that they all blur into one big problem).</p>
+					<h1>ORDER BY items must appear in the select list if the statement contains a UNION operator <small><a href="/">&laquo; Home</a></small></h1>
+
+<p>19 Aug 2008</p>
+
+<p>Is a very annoying error message that you get when writing above average complexity <code>SELECT</code> statements. I’m not sure if it only applies to queries against SQL Server, but it can be very difficult to debug if you haven’t come across it before (or come across so many things in a day that they all blur into one big problem).</p>
 
 <p>For me at least it happens like this:</p>
 
@@ -82,6 +86,8 @@ FROM t3
 </code></pre>
 
 <p>It’s that <code>ORDER BY Bar</code> part that gives grief. I can’t see why it’s an issue, but this is what to look out for. Replace the subquery with a view or find some other way to do it without the <code>ORDER BY</code> clause.</p>
+
+
 
 				</div>
 			</div>

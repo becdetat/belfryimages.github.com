@@ -1,6 +1,6 @@
 ---
 title: ConvertIcon!
-layout: default
+layout: post
 date: 2011-05-4
 type: link
 ---

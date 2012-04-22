@@ -1,6 +1,6 @@
 ---
 title: Logical XOR operator in C#
-layout: default
+layout: post
 date: 2008-03-04
 type: regular
 ---

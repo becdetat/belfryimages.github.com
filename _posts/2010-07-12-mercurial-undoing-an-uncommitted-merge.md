@@ -1,11 +1,11 @@
 ---
-title: Mercurial: Undoing an uncommitted merge
-layout: default
+title: Mercurial - Undoing an uncommitted merge
+layout: post
 date: 2010-07-12
 type: regular
 ---
 
-I’ve moved from Subversion to Mercurial at work to get past some merge problems SVN was giving me. After a few teething problems everything is working out fantastic. I’m also mainly using the command line rather than a GUI front end which is surprisingly efficient.
+I've moved from Subversion to Mercurial at work to get past some merge problems SVN was giving me. After a few teething problems everything is working out fantastic. I'm also mainly using the command line rather than a GUI front end which is surprisingly efficient.
 
 I just did a merge to a stable branch then realised I had forgotten a change that really should be done on the branch I was merging from (just a version number update). Unfortunately you can’t seem to merge revisions over the top of an existing uncommitted merge so I needed to roll back the merge and start again. In Subversion I would just revert the changes, but Mercurial is a bit smarter about its merges.
 

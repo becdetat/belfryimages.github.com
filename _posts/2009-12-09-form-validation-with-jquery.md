@@ -1,6 +1,6 @@
 ---
 title: Form validation with jQuery
-layout: default
+layout: post
 date: 2009-12-09
 type: regular
 ---

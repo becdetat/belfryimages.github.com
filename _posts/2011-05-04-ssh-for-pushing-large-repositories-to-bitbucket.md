@@ -1,6 +1,6 @@
 ---
 title: SSH for pushing large repositories to BitBucket
-layout: default
+layout: post
 date: 2011-05-04
 type: regular
 ---

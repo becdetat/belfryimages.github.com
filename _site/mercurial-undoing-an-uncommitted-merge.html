@@ -1,4 +1,68 @@
-<p>I’ve moved from Subversion to Mercurial at work to get past some merge problems SVN was giving me. After a few teething problems everything is working out fantastic. I’m also mainly using the command line rather than a GUI front end which is surprisingly efficient.</p>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Mercurial - Undoing an uncommitted merge</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
+		<meta name="author" content="Ben Scott"/>
+		<link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+		<link href="/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="/lib/jquery-1.7.2.min.js"></script>
+		<link href="/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+		<script src="/lib/google-code-prettify/prettify.js"></script>
+		<script src="/js/site.js"></script>
+		<!--[if lt IE 9]>
+			<script src=http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<style type="text/css">
+		body {
+			padding-top: 60px;
+			padding-bottom: 40px;
+		}
+		.hero-unit {
+			padding: 20px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="/">Belfry Images</a>
+					<div class="nav-collapse">
+						<ul class="nav">
+							<li><a href="/">Home</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<div class="hero-unit">
+						<h1>Belfry Images</h1>
+						<p>Ben Scott's personal blog</p>
+					</div>
+					<div class="well">
+						
+<p>A computer programmer, employed by <a href="http://capinvest.com.au">Capricorn Investment Partners</a> as IT manager, and as manager of <a href="http://ciplit.com.au">CIPL IT Services</a>.</p>
+
+<p>I mostly work in C# / .NET 4.0, developing an in-house portfolio management system (WinForms based), with some ASP.NET MVC parts. I also do some development in Ruby, and have some commercial experience with HTML, JavaScript, and PHP.</p>
+
+<p>Recently I've been contributing to <a href="http://...">MarkPad</a>, a WPF based Markdown editor created by the <a href="http://code52.org">Code52</a> project. It's pretty awesome.</p>
+
+
+					</div>
+				</div>
+				<div class="span9">
+					<h1>Mercurial - Undoing an uncommitted merge <small><a href="/">&laquo; Home</a></small></h1>
+
+<p>12 Jul 2010</p>
+
+<p>I've moved from Subversion to Mercurial at work to get past some merge problems SVN was giving me. After a few teething problems everything is working out fantastic. I'm also mainly using the command line rather than a GUI front end which is surprisingly efficient.</p>
 
 <p>I just did a merge to a stable branch then realised I had forgotten a change that really should be done on the branch I was merging from (just a version number update). Unfortunately you can’t seem to merge revisions over the top of an existing uncommitted merge so I needed to roll back the merge and start again. In Subversion I would just revert the changes, but Mercurial is a bit smarter about its merges.</p>
 
@@ -9,3 +73,16 @@ hg update -C -r .
 </code></pre>
 
 <p>Calling <code>hg parents</code> should now just show the original parent.</p>
+
+
+
+				</div>
+			</div>
+
+			<hr/>
+			<footer>
+				<p>Content &copy; 2012 Ben Scott</p>
+			</footer>
+		</div>
+	</body>
+</html>

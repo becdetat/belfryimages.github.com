@@ -1,6 +1,6 @@
 ---
 title: Cliche – an extremely simple view template engine for jQuery
-layout: default
+layout: post
 date: 2009-12-21
 type: regular
 ---

@@ -1,6 +1,6 @@
 ---
 title: Restoring/repairing a Mercurial repo from a live .hg copy
-layout: default
+layout: post
 date: 2011-05-05
 type: regular
 ---

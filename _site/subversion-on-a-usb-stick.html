@@ -58,7 +58,11 @@
 					</div>
 				</div>
 				<div class="span9">
-					<p>I use Subversion for version control at work, so I wanted to use it for a couple of websites and projects that I play with at home. I’ve been thinking about buying a cheap server or NAS that I could set up but couldn’t justify the cost and electricity just for want of version control.</p>
+					<h1>Subversion on a USB stick <small><a href="/">&laquo; Home</a></small></h1>
+
+<p>27 Sep 2009</p>
+
+<p>I use Subversion for version control at work, so I wanted to use it for a couple of websites and projects that I play with at home. I’ve been thinking about buying a cheap server or NAS that I could set up but couldn’t justify the cost and electricity just for want of version control.</p>
 
 <p>As it happens, my Subversion client of choice TortoiseSVN can create and access local Subversion repositories. Probably all SVN clients can do this, and this is just a feature of the system, but when I’m used to seeing the version control purely as a client/server configuration this was a bit of a surprise. TortoiseSVN integrates nicely with Windows Explorer which makes it extremely easy to work with. If I had to load a seperate SVN client just to commit changes I would most likely put it off and/or forget about it. TortoiseSVN makes working with Subversion so easy that it is the main reason I keep giving up on Linux for my development machines.</p>
 
@@ -79,6 +83,8 @@
 <p>I haven’t experimented with this so far but I suspect there may be issues if the USB drive comes up on another driver letter. The repository url will probably need to be changed in the working copy. That should be possible via the Relocate command in TortoiseSVN’s context menu.</p>
 
 <p><em>UPDATE: Relocate is indeed the command to use. TortoiseSVN throws up a warning about corrupting your working copy, but as long as the path entered is the new path to the same place in the repository (eg from <code>file:///H:/svnrepos/bentest/trunk</code> to <code>file:///F:/svnrepos/bentest/trunk</code>) this is the best/only method.</em></p>
+
+
 
 				</div>
 			</div>

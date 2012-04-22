@@ -1,6 +1,6 @@
 ---
 title: Explicit, parameterless constructors for WCF DataContractSerializer
-layout: default
+layout: post
 date: 2011-06-24
 type: regular
 ---

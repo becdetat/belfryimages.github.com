@@ -1,11 +1,11 @@
 ---
 title: Replacing a method on an instance in Ruby
-layout: default
+layout: post
 date: 2010-12-18
 type: regular
 ---
 
-I just read a [post by David Tchepak][http://www.davesquared.net/2010/12/revisting-replacing-ruby-instance.html] where he describes a way of replacing a method on an instance of a class on the fly, allowing the replacement to close over locals. This would be useful for unit testing at the least. The technique that Dave uses is cool – this is a simplified version:
+I just read a [post by David Tchepak](http://www.davesquared.net/2010/12/revisting-replacing-ruby-instance.html) where he describes a way of replacing a method on an instance of a class on the fly, allowing the replacement to close over locals. This would be useful for unit testing at the least. The technique that Dave uses is cool – this is a simplified version:
 
 	name = "Anonymous Dave"
 	greeter.extend Module.new do

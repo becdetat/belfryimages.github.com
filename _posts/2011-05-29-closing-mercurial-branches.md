@@ -1,6 +1,6 @@
 ---
 title: Closing Mercurial branches
-layout: default
+layout: post
 date: 2011-05-29
 type: regular
 ---

@@ -1,6 +1,6 @@
 ---
 title: Editing past log comments in Subversion
-layout: default
+layout: post
 date: 2008-03-18
 type: regular
 ---

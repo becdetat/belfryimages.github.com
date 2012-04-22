@@ -58,7 +58,13 @@
 					</div>
 				</div>
 				<div class="span9">
-					<p>I’m using <a href="http://xmlgraphics.apache.org/fop/">Apache FOP</a> to generate PDFs from <a href="http://www.w3.org/TR/xsl">XSL:FO</a>, and an external graphic (think the <code>&lt;img&gt;</code> tag in HTML) kept being resized incorrectly. Another image (different size) was the correct size on the page. Turns out I was using height and width attributes in the <code>fo:external-graphic</code> element, when I should have been using <code>content-height</code> and <code>content-width</code>. Somehow the second image respected the height and width I wanted. Possibly this has something to do with the stored DPI of the images (since XSL:FO is a specification for printed documents), but in any case content-width and content-height is the way to go. Way to go, Ben :P</p>
+					<h1>External graphics in XSL:FO not sizing correctly <small><a href="/">&laquo; Home</a></small></h1>
+
+<p>04 Jun 2008</p>
+
+<p>I’m using <a href="http://xmlgraphics.apache.org/fop/">Apache FOP</a> to generate PDFs from <a href="http://www.w3.org/TR/xsl">XSL:FO</a>, and an external graphic (think the <code>&lt;img&gt;</code> tag in HTML) kept being resized incorrectly. Another image (different size) was the correct size on the page. Turns out I was using height and width attributes in the <code>fo:external-graphic</code> element, when I should have been using <code>content-height</code> and <code>content-width</code>. Somehow the second image respected the height and width I wanted. Possibly this has something to do with the stored DPI of the images (since XSL:FO is a specification for printed documents), but in any case content-width and content-height is the way to go. Way to go, Ben :P</p>
+
+
 
 				</div>
 			</div>

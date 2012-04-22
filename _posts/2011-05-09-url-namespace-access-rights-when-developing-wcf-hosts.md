@@ -1,6 +1,6 @@
 ---
 title: URL namespace access rights when developing WCF hosts
-layout: default
+layout: post
 date: 2011-05-09
 type: regular
 ---
