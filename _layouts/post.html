@@ -2,7 +2,10 @@
 layout: default
 ---
 
-<h1>{{ page.title }} <small><a href="/">&laquo; Home</a></small></h1>
+<ul class="breadcrumb">
+	<li><a href="/">Home</a> <span class="divider">/</span></li>
+	<li class="active">{{ page.title }}</li>
+</ul>
 
 <p>{{ page.date | date_to_string }}</p>
 
