@@ -1,11 +1,7 @@
 ---
 title: Closing Mercurial branches
 layout: default
-tags:
-  - mercurial
-  - dvcs
-  - hg
-
+date: 2011-05-29
 type: regular
 ---
 

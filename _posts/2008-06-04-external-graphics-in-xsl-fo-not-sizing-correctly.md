@@ -1,7 +1,7 @@
 ---
 title: External graphics in XSL:FO not sizing correctly
 layout: default
-
+date: 2008-06-04
 type: regular
 ---
 

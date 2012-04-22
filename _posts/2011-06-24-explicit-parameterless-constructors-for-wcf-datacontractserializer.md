@@ -1,10 +1,7 @@
 ---
 title: Explicit, parameterless constructors for WCF DataContractSerializer
 layout: default
-tags:
-  - wcf
-  - dotnet
-
+date: 2011-06-24
 type: regular
 ---
 

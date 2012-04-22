@@ -1,13 +1,7 @@
 ---
 title: Unit testing a WinForms ListView – getting the SelectedItems property
 layout: default
-tags:
-  - c-sharp
-  - nunit
-  - tdd
-  - ui
-  - winforms
-
+2010-12-22
 type: regular
 ---
 

@@ -1,9 +1,7 @@
 ---
 title: Google via Ruby console tool
 layout: default
-tags:
-  - ruby
-
+date: 2010-08-01
 type: regular
 ---
 

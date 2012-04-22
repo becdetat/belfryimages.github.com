@@ -1,11 +1,7 @@
 ---
 title: Deleting items in a table with AJAX via JQuery
 layout: default
-tags:
-  - html
-  - javascript
-  - jquery
-
+date: 2009-11-29
 type: regular
 ---
 

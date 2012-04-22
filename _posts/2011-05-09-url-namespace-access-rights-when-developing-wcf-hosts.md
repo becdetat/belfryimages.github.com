@@ -1,10 +1,7 @@
 ---
 title: URL namespace access rights when developing WCF hosts
 layout: default
-tags:
-  - c-sharp
-  - wcf
-
+date: 2011-05-09
 type: regular
 ---
 

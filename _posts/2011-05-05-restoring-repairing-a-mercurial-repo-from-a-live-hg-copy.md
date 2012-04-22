@@ -1,11 +1,7 @@
 ---
 title: Restoring/repairing a Mercurial repo from a live .hg copy
 layout: default
-tags:
-  - mercurial
-  - dvcs
-  - hg
-
+date: 2011-05-05
 type: regular
 ---
 

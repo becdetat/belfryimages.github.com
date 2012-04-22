@@ -1,10 +1,7 @@
 ---
 title: Could not find resources exception when modifying a form class in Visual Studio .NET 2003
 layout: default
-tags:
-  - visual studio
-  - c-sharp
-
+date: 2008-02-21
 type: regular
 ---
 

@@ -1,11 +1,7 @@
 ---
 title: Running etherpad-lite from source on Windows 
 layout: default
-tags:
-  - etherpad
-  - nodejs
-
-type: regular
+date: 2011-12-23
 ---
 
 1. Fork and clone etherpad-lite

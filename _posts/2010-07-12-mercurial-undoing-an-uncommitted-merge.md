@@ -1,10 +1,7 @@
 ---
 title: Mercurial: Undoing an uncommitted merge
 layout: default
-tags:
-  - mercurial
-  - version control
-
+date: 2010-07-12
 type: regular
 ---
 

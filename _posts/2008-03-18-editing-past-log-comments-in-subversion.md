@@ -1,10 +1,7 @@
 ---
 title: Editing past log comments in Subversion
 layout: default
-tags:
-  - source control
-  - subversion
-
+date: 2008-03-18
 type: regular
 ---
 

@@ -1,9 +1,7 @@
 ---
 title: Replacing a method on an instance in Ruby
 layout: default
-tags:
-  - ruby
-
+date: 2010-12-18
 type: regular
 ---
 

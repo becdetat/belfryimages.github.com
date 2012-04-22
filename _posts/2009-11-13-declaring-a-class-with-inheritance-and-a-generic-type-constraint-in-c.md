@@ -1,9 +1,7 @@
 ---
 title: Declaring a class with inheritance and a generic type constraint in C#
 layout: default
-tags:
-  - c-sharp
-
+date: 2009-11-13
 type: regular
 ---
 

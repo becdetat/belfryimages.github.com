@@ -1,10 +1,7 @@
 ---
 title: Tip: list all actively listening ports on a Windows machine
 layout: default
-tags:
-  - os
-  - tech support
-
+date: 2008-11-07
 type: regular
 ---
 

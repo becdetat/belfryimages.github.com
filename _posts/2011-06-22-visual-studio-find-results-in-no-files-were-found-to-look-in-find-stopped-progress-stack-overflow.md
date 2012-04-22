@@ -1,9 +1,7 @@
 ---
 title: Visual Studio "Find" results in "No files were found to look in. Find stopped progress." - Stack Overflow
 layout: default
-tags:
-  - visual studio
-
+date: 2011-06-22
 type: link
 ---
 

@@ -1,12 +1,7 @@
 ---
 title: SSH for pushing large repositories to BitBucket
 layout: default
-tags:
-  - mercurial
-  - dvcs
-  - bitbucket
-  - hg
-
+date: 2011-05-04
 type: regular
 ---
 

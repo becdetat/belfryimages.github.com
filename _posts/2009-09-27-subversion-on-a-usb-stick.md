@@ -1,9 +1,7 @@
 ---
 title: Subversion on a USB stick
 layout: default
-tags:
-  - subversion
-
+date: 2009-09-27
 type: regular
 ---
 

@@ -1,5 +1,8 @@
 ---
 Title: Rebasing in Git
+layout: post
+comments: true
+date: ...
 ---
 
 	git fetch origin master

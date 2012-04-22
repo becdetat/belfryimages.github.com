@@ -1,10 +1,7 @@
 ---
 title: Quick fix for Skype messing around with phone numbers and ABNs on websites
 layout: default
-tags:
-  - skype
-  - html
-
+date: 2010-12-13
 type: regular
 ---
 

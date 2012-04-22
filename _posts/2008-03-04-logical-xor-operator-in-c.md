@@ -1,9 +1,7 @@
 ---
 title: Logical XOR operator in C#
 layout: default
-tags:
-  - c-sharp
-
+date: 2008-03-04
 type: regular
 ---
 

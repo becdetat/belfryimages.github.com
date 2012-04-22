@@ -1,10 +1,7 @@
 ---
 title: Accessing anonymous object properties using reflection
 layout: default
-tags:
-  - c-sharp
-  - reflection
-
+date: 2010-04-19
 type: regular
 ---
 

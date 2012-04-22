@@ -1,11 +1,7 @@
 ---
 title: Form validation with jQuery
 layout: default
-tags:
-  - html
-  - javascript
-  - jquery
-
+date: 2009-12-09
 type: regular
 ---
 
