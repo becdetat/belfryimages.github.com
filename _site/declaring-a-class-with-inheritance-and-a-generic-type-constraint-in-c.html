@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>Declaring a class with inheritance and a generic type constraint in C#</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,12 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
+					I’m writing a generic class that inherits from a base class, implements an interface, and has a type constraint on the generic class. The class inheritance and interface are straightforward, as is the type constraint, but combined together it’s not obvious how to write this. Any examples of type constraints I could find don’t have inheritance or interfaces as well. So, via a bit of trail and error, here is a right way to declare such a class:
 
-<p>19 Apr 2012</p>
-
-<p>A test post.</p>
-
-<p><em>yay</em></p>
-
-<p>some <code>inline code</code>.</p>
-
-<pre><code>some code
-some more code
-</code></pre>
-
-<p>formatting?</p>
-
-<pre><code>function() { alert('hello'); }
-</code></pre>
-
-
+	public class MyClass<T> :
+	    BaseClass<T>, IMyInterface
+	    where T : ClassOfT
+	{...}
 
 				</div>
 			</div>

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>Running etherpad-lite from source on Windows</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,27 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
-
-<p>19 Apr 2012</p>
-
-<p>A test post.</p>
-
-<p><em>yay</em></p>
-
-<p>some <code>inline code</code>.</p>
-
-<pre><code>some code
-some more code
-</code></pre>
-
-<p>formatting?</p>
-
-<pre><code>function() { alert('hello'); }
-</code></pre>
-
-
+					1. Fork and clone etherpad-lite
+2. Install node.js windows installer (MSI) from http://nodejs.org
+    - This includes NPM (Node Package Manager)
+    - Path to `node.exe` and `npm.cmd` are added to the path (restart console)
+3. Download `curl.exe` (http://curl.haxx.se) and save it to somewhere in the path
+4. Open the `var` folder and delete any files named `minified*`
+5. Check the required versions of files:
+    - jQuery, from `bin/installDeps.sh`
+    - node.js, from `bin/buildForWindows.sh`
+6. From the `etherpad-lite` directory, run the following commands (note this was tested using PowerShell, may be different for cmd.exe): 
+    - copy settings.json.template_windows settings.json
+    - npm install
+    - curl -lo static\js\jquery.min.js http://code.jquery.com/jquery-1.7.min.js
+    - copy static\custom\js.template static\custom\index.template
+    - copy static\custom\js.template static\custom\pad.template
+    - copy static\custom\js.template static\custom\timeslider.template
+    - copy static\custom\css.template static\custom\index.template
+    - copy static\custom\css.template static\custom\pad.template
+    - copy static\custom\css.template static\custom\timeslider.template
+    - curl -lo bin\node.exe http://nodejs.org/dist/v0.6.5/node.exe
+7. Run `start.bat`
 
 				</div>
 			</div>

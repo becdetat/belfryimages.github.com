@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>Restoring/repairing a Mercurial repo from a live .hg copy</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,7 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
-
-<p>19 Apr 2012</p>
-
-<p>A test post.</p>
-
-<p><em>yay</em></p>
-
-<p>some <code>inline code</code>.</p>
-
-<pre><code>some code
-some more code
-</code></pre>
-
-<p>formatting?</p>
-
-<pre><code>function() { alert('hello'); }
-</code></pre>
-
-
+					I needed a quick way to clone a repository without any network access. There is probably an easy, safe way of making a bundle to clone from but for now I just copied a live `.hg` folder into the destination folder and ran `hg revert --all`. Seems to be relatively stable. Copying the whole repository would have worked as well and wouldn't require setting up the working copy, but would have taken much longer to compress, copy and decompress.
 
 				</div>
 			</div>

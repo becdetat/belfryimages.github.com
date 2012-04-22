@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>SSH for pushing large repositories to BitBucket</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,18 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
+					I'm trying to push a very large (for me) repository to [BitBucket][1]. The `.hg` folder is 2.5 G which is a pretty big chunk. This is my first time using BitBucket, in fact until now my experience of hosting Mercurial repos has been limited to either file shares or `hg serve`, so initially I tried pushing over HTTP.
 
-<p>19 Apr 2012</p>
+Four hours later and no real data had been sent, so I did some looking and decided to try using SSH. It seems to be working well at the moment (still sending as I type) but I'm not going to attempt writing my own tutorial so here are some links I found useful:
 
-<p>A test post.</p>
+- [AccessingSshRepositoriesFromWindows][2]
+- [codza - mercurial with ssh setup on windows][3]
+- [PuTTY][4]
 
-<p><em>yay</em></p>
-
-<p>some <code>inline code</code>.</p>
-
-<pre><code>some code
-some more code
-</code></pre>
-
-<p>formatting?</p>
-
-<pre><code>function() { alert('hello'); }
-</code></pre>
-
-
+[1]: http://bitbucket.org
+[2]: http://mercurial.selenic.com/wiki/AccessingSshRepositoriesFromWindows
+[3]: http://www.codza.com/mercurial-with-ssh-setup-on-windows
+[4]: http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
 
 				</div>
 			</div>

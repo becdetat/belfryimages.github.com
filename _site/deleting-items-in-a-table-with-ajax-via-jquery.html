@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Deleting items in a table with AJAX via JQuery</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
+		<meta name="author" content="Ben Scott"/>
+		<link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+		<link href="/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="/lib/jquery-1.7.2.min.js"></script>
+		<link href="/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+		<script src="/lib/google-code-prettify/prettify.js"></script>
+		<script src="/js/site.js"></script>
+		<!--[if lt IE 9]>
+			<script src=http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<style type="text/css">
+		body {
+			padding-top: 60px;
+			padding-bottom: 40px;
+		}
+		.hero-unit {
+			padding: 20px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="/">Belfry Images</a>
+					<div class="nav-collapse">
+						<ul class="nav">
+							<li><a href="/">Home</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<div class="hero-unit">
+						<h1>Belfry Images</h1>
+						<p>Ben Scott's personal blog</p>
+					</div>
+					<div class="well">
+						
+<p>A computer programmer, employed by <a href="http://capinvest.com.au">Capricorn Investment Partners</a> as IT manager, and as manager of <a href="http://ciplit.com.au">CIPL IT Services</a>.</p>
+
+<p>I mostly work in C# / .NET 4.0, developing an in-house portfolio management system (WinForms based), with some ASP.NET MVC parts. I also do some development in Ruby, and have some commercial experience with HTML, JavaScript, and PHP.</p>
+
+<p>Recently I've been contributing to <a href="http://...">MarkPad</a>, a WPF based Markdown editor created by the <a href="http://code52.org">Code52</a> project. It's pretty awesome.</p>
+
+
+					</div>
+				</div>
+				<div class="span9">
+					This is a very straight-forward tutorial on implementing a jQuery-driven ‘delete via AJAX’ feature. Say we have a plain HTML table containing a list of items and a ‘Remove’ link. I’m not going to describe the back-end, but I’m assuming something groovy like [CakePHP][1] or [ASP.NET MVC][2]. I’ve also assumed that the delete request always succeeds and never returns an error, which may not be the case. The script itself is a more than required but is my preferred method as I can extend the elements in the UI fairly easily.
+
+    <table>
+        <tr><td>Chickpeas</td>      <td><a href="/items/delete/1" class="delete">Delete</a>    </td></tr>
+        <tr><td>Garlic</td>         <td><a href="/items/delete/2" class="delete">Delete</a></td></tr>
+        <tr><td>Olive oil</td>      <td><a href="/items/delete/3" class="delete">Delete</a></td></tr>
+        <tr><td>Tahini</td>         <td><a href="/items/delete/4" class="delete">Delete</a></td></tr>
+        <tr><td>Cumin</td>          <td><a href="/items/delete/5" class="delete">Delete</a></td></tr>
+        <tr><td>Lemon juice</td>    <td><a href="/items/delete/6" class="delete">Delete</a></td></tr>
+    </table>
+
+The delete hrefs (`/items/delete/XX`) link to an action or page that deletes the specified item and returns a HTTP status of 200 (OK). If the action just redirected to the current page then this table should work as it stands, which is probably a good way to check that everthing works as expected without involving AJAX features. If you just want to set up the client side without implementing any server-side code, create the following in delete_test.php and use it for the delete links:
+
+    <?php header('HTTP/1.1 200 OK'); ?>
+
+Make sure that jQuery 1.3+ has been included in the page and add the following:
+
+	<script type="text/javascript">
+	$(function(){
+	    var ui = {
+	        init: function(){
+	            $('a.delete').live('click', ui.delete_click);
+	        },
+	 
+	        delete_click: function(){
+	            link = this;
+	            $.get(link.href, function(data, status) {
+	                $(link).parents('tr').remove();
+	            });
+	            return false;
+	        }
+	    };
+	 
+	    ui.init();
+	});
+	</script>
+
+Very basic stuff but it works. It could be jazzed up by fading out the items first or updating a status label. If there is a significant delay between calling the delete action and getting a response the user may not think anything has happened, so perhaps the delete link should change or be disabled.
+
+[1]: http://cakephp.org/
+[2]: http://www.asp.net/mvc/
+
+				</div>
+			</div>
+
+			<hr/>
+			<footer>
+				<p>Content &copy; 2012 Ben Scott</p>
+			</footer>
+		</div>
+	</body>
+</html>

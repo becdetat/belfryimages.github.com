@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Accessing anonymous object properties using reflection</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
+		<meta name="author" content="Ben Scott"/>
+		<link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+		<link href="/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="/lib/jquery-1.7.2.min.js"></script>
+		<link href="/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+		<script src="/lib/google-code-prettify/prettify.js"></script>
+		<script src="/js/site.js"></script>
+		<!--[if lt IE 9]>
+			<script src=http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<style type="text/css">
+		body {
+			padding-top: 60px;
+			padding-bottom: 40px;
+		}
+		.hero-unit {
+			padding: 20px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="/">Belfry Images</a>
+					<div class="nav-collapse">
+						<ul class="nav">
+							<li><a href="/">Home</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<div class="hero-unit">
+						<h1>Belfry Images</h1>
+						<p>Ben Scott's personal blog</p>
+					</div>
+					<div class="well">
+						
+<p>A computer programmer, employed by <a href="http://capinvest.com.au">Capricorn Investment Partners</a> as IT manager, and as manager of <a href="http://ciplit.com.au">CIPL IT Services</a>.</p>
+
+<p>I mostly work in C# / .NET 4.0, developing an in-house portfolio management system (WinForms based), with some ASP.NET MVC parts. I also do some development in Ruby, and have some commercial experience with HTML, JavaScript, and PHP.</p>
+
+<p>Recently I've been contributing to <a href="http://...">MarkPad</a>, a WPF based Markdown editor created by the <a href="http://code52.org">Code52</a> project. It's pretty awesome.</p>
+
+
+					</div>
+				</div>
+				<div class="span9">
+					Anonymous objects are a way to create strongly typed objects without having to declare a class or struct in C# 3.5 and above. Declaring an anonymous object is easy:
+
+	var breakfast = new
+	{
+	    Cereal = "High fibre",
+	    Coffee = "Latte",
+	    Bacon = "Crispy"
+	};
+
+In the scope of the object’s declaration, accessing the properties of breakfast is as simple as `breakfast.Cereal`. However accessing the properties outside of that scope is not as simple. Say we have an object `ben` with a method `Eat(object meal)`. Within `ben.Eat()` we can’t do something directly with `meal.Coffee` because `Coffee` isn’t known in `ben.Eat()`‘s scope.
+
+Getting a property value using reflection is pretty basic but takes a couple of steps. There are much more advanced uses of reflection that allow access to hidden properties, fields and methods, but picking public properties is probably the easiest case. The following method returns the value of a public property of an object. This could be used on an anonymous object, or on any other class of object.
+
+	using System.Reflection;
+	...
+	object GetPropertyValue(object o, string propertyName)
+	{
+	    var prop = o.GetType().GetProperty(propertyName);
+	    if (prop == null) return null;
+	    return prop.GetValue(o, null);
+	}
+	...
+	var cereal = GetPropertyValue(breakfast, "Cereal");
+	Assert.That(cereal, Is.EqualTo("High fibre"));
+
+prop is a PropertyInfo object that lets the value of a property be retrieved via reflection. The same method can be used to get a dictionary of [property name, value] from an anonymous object:
+
+	IDictionary<string, object> ObjectToDictionary(object o)
+	{
+	    var dict = o.GetType().GetProperties().ToDictionary(
+	        prop => prop.Name, prop => prop.GetValue(o, null)
+	            );
+	    return dict;
+	}
+
+This sets up a dictionary where the key is the name of the property, and the value is (ahem) the value of the property:
+
+	var breakfastDictionary = ObjectToDictionary(breakfast);
+	Assert.That(breakfastDictionary.Count, Is.EqualTo(3));
+	Assert.That(breakfastDictionary["Coffee"], Is.EqualTo("Latte"));
+
+Using anonymous objects and reflection is a bit slower to execute than using strongly-typed objects, but once the methods are in place to access the properties, the savings in developer time can be great. Leaving more time for breakfast. Speaking of which, I’m late for work.
+
+
+				</div>
+			</div>
+
+			<hr/>
+			<footer>
+				<p>Content &copy; 2012 Ben Scott</p>
+			</footer>
+		</div>
+	</body>
+</html>

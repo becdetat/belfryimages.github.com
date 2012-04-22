@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>Unit testing a WinForms ListView – getting the SelectedItems property</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,19 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
+					Quick tip / reminder to myself. I’m adding some tests to an ancient (almost two years old :-) ) Winforms control that uses a ListView. All I’m doing is making sure that a particular context menu item is enabled or disabled depending on the state of the object in the tag of the selected item in the ListView. The details aren’t important. Trust me.
 
-<p>19 Apr 2012</p>
+The issue is that since the control being tested is never actually displayed, the ListView control doesn’t update its SelectedItems property. I found a Stack Overflow [question and answer][1] regarding this. The (marked as) ‘correct’ answer involves flashing up a hidden form containing the control. Potentially messy. If I was testing a form I could just flash that up but still, not an ideal solution. The [second answer][2] to the question does the trick. Fourth line is the money shot:
 
-<p>A test post.</p>
+	// Select the first list view item:
+	controlBeingTested.myListView.Items[0].Selected = true;
+	// then trick controlBeingTested.myListView.SelectedItems into being updated:
+	controlBeingTested.myListView.AccessibilityObject.ToString();
 
-<p><em>yay</em></p>
+The downside is that the `Accessibility` reference needs to be added to the unit test assembly.
 
-<p>some <code>inline code</code>.</p>
-
-<pre><code>some code
-some more code
-</code></pre>
-
-<p>formatting?</p>
-
-<pre><code>function() { alert('hello'); }
-</code></pre>
-
-
+[1]: http://stackoverflow.com/questions/304844/why-do-selectedindices-and-selecteditems-not-work-when-listview-is-instantiated-i
+[2]: http://stackoverflow.com/questions/304844/why-do-selectedindices-and-selecteditems-not-work-when-listview-is-instantiated-i/518411#518411
 
 				</div>
 			</div>

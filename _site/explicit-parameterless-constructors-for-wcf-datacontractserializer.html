@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>Explicit, parameterless constructors for WCF DataContractSerializer</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,9 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
+					So WCF in .NET 3.5 SP1 can (de)serialise POCOs without a default, parameterless constructor <small>citation needed :-P</small>. But if your POCO has _any_ constructor at all, there has to be an explicit parameterless constructor as well.
 
-<p>19 Apr 2012</p>
-
-<p>A test post.</p>
-
-<p><em>yay</em></p>
-
-<p>some <code>inline code</code>.</p>
-
-<pre><code>some code
-some more code
-</code></pre>
-
-<p>formatting?</p>
-
-<pre><code>function() { alert('hello'); }
-</code></pre>
-
-
+Yeah that makes sense, but it's still yet another pain point when you're refactoring a library that is a dependency for a number of applications and one of those applications happens to be a WCF service, and there is no compile-time failure. I guess I need some automated tests that consume a running service.
 
 				</div>
 			</div>

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>Quick fix for Skype messing around with phone numbers and ABNs on websites</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,11 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
+					The Skype plugin for Internet Explorer finds text it thinks is phone numbers and adds controls around it to let the user call the number via Skype. Nasty work. Especially since it also picks up ABNs, company numbers, etc, and tends to break the page layout as well.
 
-<p>19 Apr 2012</p>
+To fix it, this meta declaration needs to be added to the `head` element:
 
-<p>A test post.</p>
-
-<p><em>yay</em></p>
-
-<p>some <code>inline code</code>.</p>
-
-<pre><code>some code
-some more code
-</code></pre>
-
-<p>formatting?</p>
-
-<pre><code>function() { alert('hello'); }
-</code></pre>
-
-
+	<meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
 
 				</div>
 			</div>

@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8"/>
-		<title>Test post</title>
+		<title>Closing Mercurial branches</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
 		<meta name="author" content="Ben Scott"/>
@@ -58,26 +58,43 @@
 					</div>
 				</div>
 				<div class="span9">
-					<h1>Test post <small><a href="/">&laquo; Home</a></small></h1>
+					I've used two methods of closing branches in Mercurial.
 
-<p>19 Apr 2012</p>
+### Non-destructively closing the branch
 
-<p>A test post.</p>
+The first non-destructively closes the branch just so it doesn't show up in `hg heads`. You switch to the bad branch (use either the tag or revision number) then add a commit that closes the branch:
 
-<p><em>yay</em></p>
+    hg up -C badbranch
+    hg com --close-branch -m "closing this branch"
+    hg up default
 
-<p>some <code>inline code</code>.</p>
+### Destroying all unwanted branches
 
-<pre><code>some code
-some more code
-</code></pre>
+The second destructively closes the branch, which can dramatically reduce the size of the repository's `.hg` folder. I did this when I was [moving my work repository to BitBucket][3]. It isn't an easy process and is very time consuming, and make sure you have backups.
 
-<p>formatting?</p>
+Say you're in `C:\projects` and the repository you want to clone is in `C:\projects\my_repo`. You clone the entire repository, but only the heads that you want to keep:
 
-<pre><code>function() { alert('hello'); }
-</code></pre>
+    hg clone my_repo my_repo.clone --rev <revision> --rev <another revision> ...
 
+For example, I only wanted to save my `default` and `stable` branches, so I used `hg clone my_repo my_repo.clone --rev default --rev stable`.
 
+Then verify that the differences between the original and the cloned repository are only the branches you wanted to drop:
+
+    hg incoming -R my_repo.clone my_repo
+
+If you missed some changesets in the clone step you can pull them over:
+
+    hg pull -R my_repo.clone my_repo --rev <missed revision>
+
+You then need to copy over non-tracked files from the original repository, especially `.hg\hgrc`, as the cloned repository is pointing to the original repository by default.
+
+I had issues getting the trimmed repository over to other copies of the repository. In particular I couldn't `hg pull` from the trimmed repository any more. I ended up just copying the entire repository to my different machines and set them up from there.
+
+The [Mercurial Wiki][1] has a fine page on [pruning branches][2] which is where I found these methods.
+
+[1]: http://mercurial.selenic.com/wiki/Mercurial
+[2]: http://mercurial.selenic.com/wiki/PruningDeadBranches
+[3]: http://blog.belfryimages.com.au/post/5203916079/ssh-for-pushing-large-repositories-to-bitbucket
 
 				</div>
 			</div>
