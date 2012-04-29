@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title>Setting up MEF</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="description" content="Belfry Images, Ben Scott's personal blog"/>
+		<meta name="author" content="Ben Scott"/>
+		<link href="/lib/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+		<link href="/lib/bootstrap/css/bootstrap-responsive.css" rel="stylesheet"/>
+		<script src="/lib/jquery-1.7.2.min.js"></script>
+		<link href="/lib/google-code-prettify/prettify.css" rel="stylesheet"/>
+		<script src="/lib/google-code-prettify/prettify.js"></script>
+		<script src="/js/site.js"></script>
+		<!--[if lt IE 9]>
+			<script src=http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<style type="text/css">
+		body {
+			padding-top: 60px;
+			padding-bottom: 40px;
+		}
+		.hero-unit {
+			padding: 20px;
+		}
+		</style>
+	</head>
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="brand" href="/">Belfry Images</a>
+					<div class="nav-collapse">
+						<ul class="nav">
+							<li><a href="/">Home</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<div class="row">
+				<div class="span3">
+					<div class="hero-unit">
+						<h1>Belfry Images</h1>
+						<p>Ben Scott's personal blog</p>
+					</div>
+					<div class="well">
+						<h2>About me</h2>
+
+<p>A computer programmer, employed by <a href="http://capinvest.com.au">Capricorn Investment Partners</a> as IT manager, and as manager of <a href="http://ciplit.com.au">CIPL IT Services</a>.</p>
+
+<p>I mostly work in C# / .NET 4.0, developing an in-house portfolio management system (WinForms based), with some ASP.NET MVC parts. I also do some development in Ruby, and have some commercial experience with HTML, JavaScript, and PHP.</p>
+
+<p>Recently I've been contributing to <a href="http://...">MarkPad</a>, a WPF based Markdown editor created by the <a href="http://code52.org">Code52</a> project. It's pretty awesome.</p>
+
+
+					</div>
+					<div class="well">
+<h2>Meanwhile, on the internet...</h2>
+
+<ul class="unstyled">
+	<li><a href="https://twitter.com/#!/belfryimages">Twitter</a></li>
+	<li><a href="https://github.com/belfryimages">GitHub</a></li>
+	<li><a href="http://stackoverflow.com/users/149259/ben-scott">Stack Overflow</a></li>
+	<li><a href="http://careers.stackoverflow.com/benscott">Resume at Careers 2.0</a></li>
+	<li><a href="http://www.linkedin.com/profile/view?id=60433262&trk=tab_pro">LinkedIn</a></li>
+</ul>
+
+</div>
+				</div>
+				<div class="span9">
+					<ul class="breadcrumb">
+	<li><a href="/">Home</a> <span class="divider">/</span></li>
+	<li class="active">Setting up MEF</li>
+</ul>
+
+<p><em><small>29 Apr 2012</small></em></p>
+
+<p><em>The source code for the example application created while writing this post is available on <a href="https://github.com/belfryimages/mef-test">GitHub</a>.</em></p>
+
+<p>I've been working on adding support for plugins to <a href="http://code52.org/DownmarkerWPF/">MarkPad</a>. Initially this was going to use NuGet to drag in the plugins, and MEF to dynamically load the . Because of problems like how to manage updates with new versions and the general awkwardness of the build system, I've decided to drop NuGet for now and just link the plugins statically, still using MEF to handle basic dependency injection and loading up the plugins.</p>
+
+<p>MEF seems tragically difficult to debug, especially when setting it up in an existing application like MarkPad, with Autofac already set up and doing magic, so I've set up a test application to get a feel of the general layout. This is a bit of a walkthrough of the result.</p>
+
+<h2>Projects / assemblies</h2>
+
+<p>There are three assemblies in my test application:</p>
+
+<ul>
+<li><strong>Consumer</strong>, a WinForms app that will consume the exported extensions,</li>
+<li><strong>Contracts</strong>, a class library containing interfaces that the plugins and consumer will operate through (essentially the plugin API), and</li>
+<li><strong>Plugins</strong>, another class library containing the plugin classes</li>
+</ul>
+
+
+<p>Both the <strong>Consumer</strong> and <strong>Plugins</strong> assemblies reference the <strong>Contracts</strong> assembly. In a real-world application, each plugin would reside in its own assembly and would be loaded from an <code>Extensions</code> folder or similar, but in this example I'll just make the <strong>Consumer</strong> assembly reference the <strong>Plugins</strong> assembly. This is just to get the <strong>Plugins</strong> dll into the output directory, as later on MEF just imports <strong>Plugins.dll</strong> by name anyway. I could probably drop the reference and copy <strong>Plugins.dll</strong> to the output directory in the build, but what I've got is a bit simpler in the short term.</p>
+
+<h2>Spec for the example</h2>
+
+<h3>The application</h3>
+
+<p>The application will consist of just two buttons and a text box. The first button will call all of the <strong>HelloWorld</strong> plugins, and the second will call all of the <strong>GoodbyeCruelWorld</strong> plugins. The value of the text box (labeled 'Name') will be made available to the plugins.</p>
+
+<p><strong>HelloWorld</strong> plugins will implement <code>IHelloWorldPlugin</code>, <strong>GoodbyeCruelWorld</strong> plugins will implement <code>IGoodbyeCruelWorldPlugin</code>, and the application will implement <code>IGetName</code> to expose the entered name.</p>
+
+<p>I've got both <strong>HelloWorld</strong> and <strong>GoodbyeCruelWorld</strong> plugins to demonstrate different plugins providing different functionality to the consuming application, while using the same API.</p>
+
+<h3>Plugins</h3>
+
+<p>I'm going to have three plugins:</p>
+
+<ul>
+<li>A <code>IHelloWorldPlugin</code> plugin that replies with a <code>Hello, World!</code> message when called,</li>
+<li>A <code>IHelloWorldPlugin</code> plugin that takes a <code>IGetName</code> dependency that provides a name from the consuming application, and replies with a <code>Hello, !</code> message when called, and</li>
+<li>A <code>IGoodbyeCruelWorldPlugin</code> that replies with its own message when called</li>
+</ul>
+
+
+<h2>Initial setup</h2>
+
+<p>I won't write the MEF decorators or management code yet, instead I'll get the implementation code out of the way.</p>
+
+<h3>Contracts</h3>
+
+<p>The contracts / plugin API is very simple. I want a base plugin type (<code>IPlugin</code>), two plugin types (<code>IHelloWorldPlugin</code> and <code>IGoodbyeCruelWorldPlugin</code>) and a way to expose what is in the 'name' text box (<code>IGetName</code>).</p>
+
+<pre><code>public interface IPlugin { }
+
+public interface IHelloWorldPlugin : IPlugin
+{
+    string GetHelloMessage();
+}
+
+public interface IGoodbyeCruelWorldPlugin
+{
+    string GetGoodbyeMessage();
+}
+
+public interface IGetName
+{
+    string GetName();
+}
+</code></pre>
+
+<h3>Plugins</h3>
+
+<p>The actual implementation of the plugins is also very simple.</p>
+
+<pre><code>public class BasicHelloWorldPlugin : IHelloWorldPlugin
+{
+    public string GetHelloMessage() { return "Hello, world!"; }
+}
+
+public class HelloNamePlugin : IHelloWorldPlugin
+{
+    IGetName _getName;
+    public string GetHelloMessage() { return string.Format("Hello, {0}!", _getName.Name); }
+}
+
+public class GoodbyeCruelWorldPlugin : IGoodbyeCruelWorldPlugin
+{
+    public string GetGoodbyeMessage() { return "Noooooooo!!!!"; }
+}
+</code></pre>
+
+<p>The <code>IGetName _getName</code> instance will be injected by MEF, I'll add the decorator later on.</p>
+
+<h3>Consumer</h3>
+
+<p>First I'll just sketch out how I want the consuming code to see and execute the plugins.</p>
+
+<p>The application in the  <strong>Consumer</strong> assembly needs to implement <code>IGetName</code>. There are other ways of doing this but this is rather straightforward. More complex examples might need to use singletons or have a bootstrap procedure that allows the plugin to connect to the consumer.</p>
+
+<pre><code>public partial class Form1 : Form, IGetName
+{
+    ...
+    public string GetName() { return GetNameTextBox.Text; }
+}   
+</code></pre>
+
+<p>The plugins are injected into two sets of collections. MEF uses the exported interface to import the implementation into the correct places, so these will get the correct plugins assigned. Then the plugins are called in the appropriate places.</p>
+
+<pre><code>IEnumerable&lt;IHelloWorldPlugin&gt; _helloWorldPlugins;
+IEnumerable&lt;IGoodbyeCruelWorldPlugin&gt; _goodbyeCruelWorldPlugins;
+
+private void HelloWorld_Click(object sender, EventArgs e)
+{
+    foreach (var plugin in _helloWorldPlugins)
+    {
+        MessageBox.Show(plugin.GetHelloWorldMessage());
+    }
+}
+
+private void GoodbyeCruelWorld_Click(object sender, EventArgs e)
+{
+    foreach (var plugin in _goodbyeCruelWorldPlugins)
+    {
+        MessageBox.Show(plugin.GetGoodbyeMessage());
+    }
+}
+</code></pre>
+
+<h2>Hooking up MEF</h2>
+
+<h3>Decorating the contract interfaces and importing fields</h3>
+
+<p>All the assemblies need to reference <code>System.ComponentModel.Composition</code>. As an aside, have you installed the <a href="http://visualstudiogallery.msdn.microsoft.com/e5f41ad9-4edc-4912-bca3-91147db95b99/"><code>PowerCommands</code></a> extension for Visual Studio 2010? It lets you copy and paste project references within the Solution Explorer. Groovy.</p>
+
+<p>All the contract endpoints (the interfaces that will be imported using MEF) need to have the <code>InheritedExport</code> attribute added to the interface. In this example, that is all of the interfaces in <strong>Contracts</strong>. Here is what <code>IHelloWorldPlugin</code> should look like with the <code>InheritedExport</code> attribute:</p>
+
+<pre><code>[InheritedExport]
+public interface IHelloWorldPlugin : IPlugin
+{
+    string GetHelloMessage();
+}
+</code></pre>
+
+<p>Any fields that need to  be imported by MEF also need to be decorated. The <code>_getName</code> field in <code>HelloNamePlugin</code> should look like this:</p>
+
+<pre><code>[Import]
+IGetName _getName;
+</code></pre>
+
+<p>And the consumer's plugin collections and should look like this:</p>
+
+<pre><code>[ImportMany]
+IEnumerable&lt;IHelloWorldPlugin&gt; _helloWorldPlugins;
+[ImportMany]
+IEnumerable&lt;IGoodbyeCruelWorldPlugin&gt; _goodbyeCruelWorldPlugins;
+</code></pre>
+
+<p>If you run the application at this point, it  will crash and burn because the consumer's fields are all still <code>null</code>. We still need to configure MEF and get it to compose the parts of the application.</p>
+
+<h3>MEF configuration</h3>
+
+<p>The following goes in the consuming application's constructor, after <code>InitializeComponent()</code> since this is a WinForms app:</p>
+
+<pre><code>var catalog = new AggregateCatalog();
+catalog.Catalogs.Add(new AssemblyCatalog("Plugins.dll"));
+var container = new CompositionContainer(catalog);
+container.ComposeParts(this);
+</code></pre>
+
+<p>This creates an aggregate catalog, which brings together all the locations (catalogs) where the exported implementations are found. In this case it is just <code>Plugins.dll</code>. There are a couple of other <code>XxxCatalog</code> implementations that can be used, for more information the <a href="http://mef.codeplex.com/wikipage?title=Using%20Catalogs&amp;referringTitle=Guide">catalogs page</a> in the <a href="http://mef.codeplex.com/documentation">MEF documentation</a> touches on them.</p>
+
+<p>The catalog is then used to create a composition container. Each class in the consumer that needs to import classes using MEF will need this catalog, so in more complex applications the composition container will need to be passed around. The <code>ComposeParts()</code> method call is what performs the actual dependency injection, finding all the fields decorated with <code>[Import]</code> and <code>[ImportMany]</code> and assigning them with the exported implementations that were foundin the aggregate catalog.</p>
+
+<h2>Shake your groove thang</h2>
+
+<p>With everything wired up and MEF properly configured, pressing the 'Say Hello' button should show <code>'Hello, World'</code> and <code>'Hello, &lt;whatever is in the name text box&gt;'</code>. Pressing the 'Say Goodbye' button should just show a pitiful cry of despair.</p>
+
+<p>In case you missed it at the top, the entire project is on <a href="https://github.com/belfryimages/mef-test">GitHub</a>.</p>
+
+
+
+				</div>
+			</div>
+
+			<hr/>
+			<footer>
+				<p>Content &copy; 2012 Ben Scott</p>
+			</footer>
+		</div>
+	</body>
+</html>
