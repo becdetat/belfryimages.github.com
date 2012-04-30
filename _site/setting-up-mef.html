@@ -113,7 +113,7 @@
 
 <ul>
 <li>A <code>IHelloWorldPlugin</code> plugin that replies with a <code>Hello, World!</code> message when called,</li>
-<li>A <code>IHelloWorldPlugin</code> plugin that takes a <code>IGetName</code> dependency that provides a name from the consuming application, and replies with a <code>Hello, !</code> message when called, and</li>
+<li>A <code>IHelloWorldPlugin</code> plugin that takes a <code>IGetName</code> dependency that provides a name from the consuming application, and replies with a <code>Hello, *name*!</code> message when called, and</li>
 <li>A <code>IGoodbyeCruelWorldPlugin</code> that replies with its own message when called</li>
 </ul>
 
@@ -208,7 +208,7 @@ private void GoodbyeCruelWorld_Click(object sender, EventArgs e)
 
 <p>All the assemblies need to reference <code>System.ComponentModel.Composition</code>. As an aside, have you installed the <a href="http://visualstudiogallery.msdn.microsoft.com/e5f41ad9-4edc-4912-bca3-91147db95b99/"><code>PowerCommands</code></a> extension for Visual Studio 2010? It lets you copy and paste project references within the Solution Explorer. Groovy.</p>
 
-<p>All the contract endpoints (the interfaces that will be imported using MEF) need to have the <code>InheritedExport</code> attribute added to the interface. In this example, that is all of the interfaces in <strong>Contracts</strong>. Here is what <code>IHelloWorldPlugin</code> should look like with the <code>InheritedExport</code> attribute:</p>
+<p>All the contract endpoints (the interfaces that will be imported using MEF) need to have the <code>InheritedExport</code> attribute added to the interface. In this example, that means all of the interfaces in <strong>Contracts</strong>. Here is what <code>IHelloWorldPlugin</code> should look like with the <code>InheritedExport</code> attribute:</p>
 
 <pre><code>[InheritedExport]
 public interface IHelloWorldPlugin : IPlugin
@@ -223,7 +223,7 @@ public interface IHelloWorldPlugin : IPlugin
 IGetName _getName;
 </code></pre>
 
-<p>And the consumer's plugin collections and should look like this:</p>
+<p>And the consumer's plugin collections should look like this:</p>
 
 <pre><code>[ImportMany]
 IEnumerable&lt;IHelloWorldPlugin&gt; _helloWorldPlugins;
@@ -231,7 +231,7 @@ IEnumerable&lt;IHelloWorldPlugin&gt; _helloWorldPlugins;
 IEnumerable&lt;IGoodbyeCruelWorldPlugin&gt; _goodbyeCruelWorldPlugins;
 </code></pre>
 
-<p>If you run the application at this point, it  will crash and burn because the consumer's fields are all still <code>null</code>. We still need to configure MEF and get it to compose the parts of the application.</p>
+<p>If you run the application at this point, it  will crash and burn because the consumer's fields are all still <code>null</code>. I still need to configure MEF and get it to compose the parts of the application.</p>
 
 <h3>MEF configuration</h3>
 
@@ -245,7 +245,7 @@ container.ComposeParts(this);
 
 <p>This creates an aggregate catalog, which brings together all the locations (catalogs) where the exported implementations are found. In this case it is just <code>Plugins.dll</code>. There are a couple of other <code>XxxCatalog</code> implementations that can be used, for more information the <a href="http://mef.codeplex.com/wikipage?title=Using%20Catalogs&amp;referringTitle=Guide">catalogs page</a> in the <a href="http://mef.codeplex.com/documentation">MEF documentation</a> touches on them.</p>
 
-<p>The catalog is then used to create a composition container. Each class in the consumer that needs to import classes using MEF will need this catalog, so in more complex applications the composition container will need to be passed around. The <code>ComposeParts()</code> method call is what performs the actual dependency injection, finding all the fields decorated with <code>[Import]</code> and <code>[ImportMany]</code> and assigning them with the exported implementations that were foundin the aggregate catalog.</p>
+<p>The catalog is then used to create a composition container. Each class in the consumer that needs to import classes using MEF will need this catalog, so in more complex applications the composition container will need to be passed around. The <code>ComposeParts()</code> method call is what performs the actual dependency injection, finding all the fields decorated with <code>[Import]</code> and <code>[ImportMany]</code> and assigning them with the exported implementations that were found in the aggregate catalog.</p>
 
 <h2>Shake your groove thang</h2>
 

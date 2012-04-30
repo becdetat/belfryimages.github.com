@@ -34,7 +34,7 @@ I've got both **HelloWorld** and **GoodbyeCruelWorld** plugins to demonstrate di
 I'm going to have three plugins:
 
 - A `IHelloWorldPlugin` plugin that replies with a `Hello, World!` message when called,
-- A `IHelloWorldPlugin` plugin that takes a `IGetName` dependency that provides a name from the consuming application, and replies with a `Hello, {{name}}!` message when called, and
+- A `IHelloWorldPlugin` plugin that takes a `IGetName` dependency that provides a name from the consuming application, and replies with a `Hello, *name*!` message when called, and
 - A `IGoodbyeCruelWorldPlugin` that replies with its own message when called
 
 ## Initial setup
@@ -122,7 +122,7 @@ The plugins are injected into two sets of collections. MEF uses the exported int
 
 All the assemblies need to reference `System.ComponentModel.Composition`. As an aside, have you installed the [`PowerCommands`](http://visualstudiogallery.msdn.microsoft.com/e5f41ad9-4edc-4912-bca3-91147db95b99/) extension for Visual Studio 2010? It lets you copy and paste project references within the Solution Explorer. Groovy.
 
-All the contract endpoints (the interfaces that will be imported using MEF) need to have the `InheritedExport` attribute added to the interface. In this example, that is all of the interfaces in **Contracts**. Here is what `IHelloWorldPlugin` should look like with the `InheritedExport` attribute:
+All the contract endpoints (the interfaces that will be imported using MEF) need to have the `InheritedExport` attribute added to the interface. In this example, that means all of the interfaces in **Contracts**. Here is what `IHelloWorldPlugin` should look like with the `InheritedExport` attribute:
 
 	[InheritedExport]
 	public interface IHelloWorldPlugin : IPlugin
@@ -135,14 +135,14 @@ Any fields that need to  be imported by MEF also need to be decorated. The `_get
 	[Import]
 	IGetName _getName;
 
-And the consumer's plugin collections and should look like this:
+And the consumer's plugin collections should look like this:
 
 	[ImportMany]
 	IEnumerable<IHelloWorldPlugin> _helloWorldPlugins;
 	[ImportMany]
 	IEnumerable<IGoodbyeCruelWorldPlugin> _goodbyeCruelWorldPlugins;
 
-If you run the application at this point, it  will crash and burn because the consumer's fields are all still `null`. We still need to configure MEF and get it to compose the parts of the application.
+If you run the application at this point, it  will crash and burn because the consumer's fields are all still `null`. I still need to configure MEF and get it to compose the parts of the application.
 
 ### MEF configuration
 
@@ -155,7 +155,7 @@ The following goes in the consuming application's constructor, after `Initialize
 
 This creates an aggregate catalog, which brings together all the locations (catalogs) where the exported implementations are found. In this case it is just `Plugins.dll`. There are a couple of other `XxxCatalog` implementations that can be used, for more information the [catalogs page](http://mef.codeplex.com/wikipage?title=Using%20Catalogs&referringTitle=Guide) in the [MEF documentation](http://mef.codeplex.com/documentation) touches on them.
 
-The catalog is then used to create a composition container. Each class in the consumer that needs to import classes using MEF will need this catalog, so in more complex applications the composition container will need to be passed around. The `ComposeParts()` method call is what performs the actual dependency injection, finding all the fields decorated with `[Import]` and `[ImportMany]` and assigning them with the exported implementations that were foundin the aggregate catalog.
+The catalog is then used to create a composition container. Each class in the consumer that needs to import classes using MEF will need this catalog, so in more complex applications the composition container will need to be passed around. The `ComposeParts()` method call is what performs the actual dependency injection, finding all the fields decorated with `[Import]` and `[ImportMany]` and assigning them with the exported implementations that were found in the aggregate catalog.
 
 ## Shake your groove thang
 
